@@ -10,11 +10,11 @@ export class User {
     @Column()
     password: string;
 
-    @OneToMany(type => FunEvent, funEvent => funEvent.user)
+    @OneToMany(Type => FunEvent, funEvent => funEvent.User)
     publishEvents: FunEvent[];
 
-    @ManyToMany(type => FunEvent, funEvent => funEvent.attendees)
-    @JoinTable()
-    attendingEvents: FunEvent[];
+    // @ManyToMany(type => FunEvent, funEvent => funEvent.attendees)
+    // @JoinTable()
+    // attendingEvents: FunEvent[];
 
 }

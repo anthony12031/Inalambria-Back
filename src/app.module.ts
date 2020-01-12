@@ -17,6 +17,7 @@ import { FunEvent } from './models/FunEvent.model';
       entities: [User, FunEvent],
       synchronize: true,
     }),
+    TypeOrmModule.forFeature([FunEvent, User]),
   ],
   controllers: [AppController],
   providers: [AppService],

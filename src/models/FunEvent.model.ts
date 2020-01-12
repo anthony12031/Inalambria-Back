@@ -1,11 +1,10 @@
-import {Entity, PrimaryGeneratedColumn, Column, PrimaryColumn, ManyToOne, ManyToMany} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, PrimaryColumn, ManyToOne, ManyToMany, JoinTable} from 'typeorm';
 import { User } from './User.model';
 import {ApiProperty} from '@nestjs/swagger';
 
 @Entity()
 export class FunEvent {
 
-    @ApiProperty()
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -22,9 +21,8 @@ export class FunEvent {
     date: Date;
 
     @ManyToOne(Type => User, user => user.publishEvents)
-    user: User;
+    User: User;
 
-    @ManyToMany(type => User, user => user.attendingEvents)
-    attendees: User[];
+    // attendees: User[];
 
 }
