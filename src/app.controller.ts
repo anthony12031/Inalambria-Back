@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './models/User.model';
 import { RegisterPurchaseDto } from './DTO/registerPurchase.dto';
+import { Purchase } from './models/Purchase.model';
 
 @Controller()
 export class AppController {
@@ -28,6 +29,11 @@ export class AppController {
   @Post('/purchase/:eventId')
   async attendEvent(@Body() registerPurchaseDto: RegisterPurchaseDto, @Param() params): Promise<boolean> {
     return await this.appService.registerPurchase(registerPurchaseDto, +params.eventId);
+  }
+
+  @Get('/purchase/')
+  async getUserPurchases(): Promise<Purchase[]> {
+    return await this.appService.getUserPurchases();
   }
 
   @Post('/events')

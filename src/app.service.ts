@@ -92,6 +92,8 @@ async registerPurchase(registerPurchase: RegisterPurchaseDto, eventId: number): 
     try {
     // Consultar el evento
     const funEvent = await this.funEventRepository.findOne(eventId);
+    // No registrar la compra si el evento no existe
+    if (funEvent) {return false; }
     const purchase = new Purchase();
     const user = new User();
     user.username = 'Anthony';
@@ -103,6 +105,19 @@ async registerPurchase(registerPurchase: RegisterPurchaseDto, eventId: number): 
     } catch (error) {
       return false;
     }
+  }
+
+/**
+ *
+ * Consulta las comprar realizadas por un usuario
+ * @returns {Promise<Purchase[]>}
+ * @memberof AppService
+ */
+async getUserPurchases(): Promise<Purchase[]> {
+    return await this.purchaseRepository.find(
+      { where: { userUsername: 'Anthony'},
+      relations: ['funEvent']},
+      );
   }
 
 /**
