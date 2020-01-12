@@ -24,6 +24,16 @@ async getEvents(): Promise<FunEvent[]> {
 
 /**
  *
+ * Retorna un evento espeifico
+ * @returns {Promise<FunEvent[]>}
+ * @memberof AppService
+ */
+async getEvent(eventId: number): Promise<FunEvent> {
+  return await this.funEventRepository.findOne(eventId);
+}
+
+/**
+ *
  * Registra un evento en base de datos
  * @param {CreateEventDto} createEventDto
  * @returns {Promise<boolean>} Retorna verdadero si el evento fue registrado de lo contrario falso

@@ -19,6 +19,11 @@ export class AppController {
     return await this.appService.getEvents();
   }
 
+  @Get('/events/:id')
+  async getEvent(@Param() params): Promise<FunEvent> {
+    return await this.appService.getEvent(params.id);
+  }
+
   @Post('/events')
   async createEvent(@Body() createEventDto: CreateEventDto): Promise<boolean> {
     return await this.appService.createEvent(createEventDto);
