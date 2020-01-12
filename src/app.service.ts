@@ -93,7 +93,7 @@ async registerPurchase(registerPurchase: RegisterPurchaseDto, eventId: number): 
     // Consultar el evento
     const funEvent = await this.funEventRepository.findOne(eventId);
     // No registrar la compra si el evento no existe
-    if (funEvent) {return false; }
+    if (!funEvent) {return false; }
     const purchase = new Purchase();
     const user = new User();
     user.username = 'Anthony';
