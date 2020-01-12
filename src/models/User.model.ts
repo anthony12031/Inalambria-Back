@@ -1,5 +1,6 @@
 import {Entity, PrimaryGeneratedColumn, Column, PrimaryColumn, OneToMany, JoinTable, ManyToMany} from 'typeorm';
 import { FunEvent } from './FunEvent.model';
+import { Purchase } from './Purchase.model';
 
 @Entity()
 export class User {
@@ -10,11 +11,10 @@ export class User {
     @Column()
     password: string;
 
-    @OneToMany(Type => FunEvent, funEvent => funEvent.User)
+    @OneToMany(type => FunEvent, funEvent => funEvent.User)
     publishEvents: FunEvent[];
 
-    // @ManyToMany(type => FunEvent, funEvent => funEvent.attendees)
-    // @JoinTable()
-    // attendingEvents: FunEvent[];
+    @OneToMany(type => Purchase, purchase => purchase.user)
+    purchases !: Purchase[];
 
 }

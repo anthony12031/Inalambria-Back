@@ -4,13 +4,19 @@ import { User } from './models/User.model';
 import { CreateEventDto } from './DTO/createEvent.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { RegisterPurchaseDto } from './DTO/registerPurchase.dto';
+import { Purchase } from './models/Purchase.model';
 
 @Injectable()
 export class AppService {
 
   constructor(
     @InjectRepository(FunEvent)
-  private readonly funEventRepository: Repository<FunEvent>) {}
+  private readonly funEventRepository: Repository<FunEvent>,
+    @InjectRepository(User)
+  private readonly userRepository: Repository<User>,
+    @InjectRepository(Purchase)
+  private readonly purchaseRepository: Repository<Purchase>) {}
 
 /**
  *
@@ -76,6 +82,31 @@ async updateEvent(createEventDto: CreateEventDto, eventId: number): Promise<bool
 
 /**
  *
+ * Registra la compra de entradas para un evento
+ * @param {RegisterPurchaseDto} registerPurchase
+ * @param {number} eventId
+ * @returns {Promise<boolean>}
+ * @memberof AppService
+ */
+async registerPurchase(registerPurchase: RegisterPurchaseDto, eventId: number): Promise<boolean> {
+    try {
+    // Consultar el evento
+    const funEvent = await this.funEventRepository.findOne(eventId);
+    const purchase = new Purchase();
+    const user = new User();
+    user.username = 'Anthony';
+    purchase.funEvent = funEvent;
+    purchase.numEntrances = registerPurchase.numEntrances;
+    purchase.user = user;
+    await this.purchaseRepository.save(purchase);
+    return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+/**
+ *
  * Construye un objeto FunEvent a partir de un objeto createEventDto
  * @private
  * @param {CreateEventDto} createEventDto
@@ -84,7 +115,6 @@ async updateEvent(createEventDto: CreateEventDto, eventId: number): Promise<bool
  */
 private buildFunEvent(createEventDto: CreateEventDto): FunEvent {
     const funEvent = new FunEvent();
-    funEvent.capacity = createEventDto.capacity;
     funEvent.name = createEventDto.name;
     funEvent.description = createEventDto.description;
     funEvent.date = createEventDto.date;

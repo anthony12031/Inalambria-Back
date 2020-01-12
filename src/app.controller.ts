@@ -5,6 +5,7 @@ import { CreateEventDto } from './DTO/createEvent.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './models/User.model';
+import { RegisterPurchaseDto } from './DTO/registerPurchase.dto';
 
 @Controller()
 export class AppController {
@@ -22,6 +23,11 @@ export class AppController {
   @Get('/events/:id')
   async getEvent(@Param() params): Promise<FunEvent> {
     return await this.appService.getEvent(params.id);
+  }
+
+  @Post('/purchase/:eventId')
+  async attendEvent(@Body() registerPurchaseDto: RegisterPurchaseDto, @Param() params): Promise<boolean> {
+    return await this.appService.registerPurchase(registerPurchaseDto, +params.eventId);
   }
 
   @Post('/events')

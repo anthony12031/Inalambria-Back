@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './models/User.model';
 import { FunEvent } from './models/FunEvent.model';
+import { Purchase } from './models/Purchase.model';
 
 @Module({
   imports: [
@@ -14,10 +15,10 @@ import { FunEvent } from './models/FunEvent.model';
       username: 'postgres',
       password: 'juegosxbox',
       database: 'funEvents',
-      entities: [User, FunEvent],
+      entities: [User, FunEvent, Purchase],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([FunEvent, User]),
+    TypeOrmModule.forFeature([Purchase, FunEvent, User]),
   ],
   controllers: [AppController],
   providers: [AppService],
