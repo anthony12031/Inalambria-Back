@@ -1,9 +1,11 @@
 import {Entity, PrimaryGeneratedColumn, Column, PrimaryColumn, ManyToOne, ManyToMany} from 'typeorm';
 import { User } from './User.model';
+import {ApiProperty} from '@nestjs/swagger';
 
 @Entity()
 export class FunEvent {
 
+    @ApiProperty()
     @PrimaryGeneratedColumn()
     id: number;
 
