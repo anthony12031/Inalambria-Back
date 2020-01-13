@@ -46,13 +46,14 @@ async getEvent(eventId: number): Promise<FunEvent> {
  * @memberof AppService
  */
 async createEvent(createEventDto: CreateEventDto): Promise<boolean> {
-     const funEvent = this.buildFunEvent(createEventDto);
-     const user = new User();
-     user.username = 'Anthony';
-     funEvent.User = user;
      try {
-    await this.funEventRepository.save(funEvent);
-    return true;
+      const funEvent = this.buildFunEvent(createEventDto);
+      funEvent.date = new Date();
+      const user = new User();
+      user.username = 'Anthony';
+      funEvent.User = user;
+      await this.funEventRepository.save(funEvent);
+      return true;
     } catch (error) {
       return false;
     }
@@ -130,6 +131,9 @@ async getUserPurchases(): Promise<Purchase[]> {
  */
 private buildFunEvent(createEventDto: CreateEventDto): FunEvent {
     const funEvent = new FunEvent();
+    if (createEventDto.name === '' || createEventDto.description === ''){
+      throw new Error('Campos vacíos');
+    }
     funEvent.name = createEventDto.name;
     funEvent.description = createEventDto.description;
     funEvent.date = createEventDto.date;
