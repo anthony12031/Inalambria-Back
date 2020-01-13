@@ -11,6 +11,7 @@ import { Purchase } from './models/Purchase.model';
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DATABASE_URL,
+      entities: [Purchase, FunEvent, User]
     }),
     TypeOrmModule.forFeature([Purchase, FunEvent, User]),
   ],
