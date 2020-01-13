@@ -10,13 +10,7 @@ import { Purchase } from './models/Purchase.model';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'juegosxbox',
-      database: 'funEvents',
-      entities: [User, FunEvent, Purchase],
-      synchronize: true,
+      url: process.env.DATABASE_URL,
     }),
     TypeOrmModule.forFeature([Purchase, FunEvent, User]),
   ],
